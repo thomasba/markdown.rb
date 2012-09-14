@@ -4,6 +4,7 @@ require 'rubygems'
 require 'redcarpet/compat'
 require 'getopt/std'
 require 'albino'
+require 'htmlentities'
 
 # highlight code blocks
 class HTMLwithAlbino < Redcarpet::Render::HTML
@@ -11,7 +12,8 @@ class HTMLwithAlbino < Redcarpet::Render::HTML
 		if !language.nil? and !language.empty? then
 			Albino.colorize(code, language)
 		else
-			return "<pre class=\"highlight\"><code>" + code + "</code></pre>"
+			coder = HTMLEntities.new
+			return "<pre class=\"highlight\"><code>" + coder.encode(code, :named) + "</code></pre>"
 		end
 	end
 end
